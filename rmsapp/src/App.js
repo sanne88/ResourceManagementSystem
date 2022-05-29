@@ -3,8 +3,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ResourceDashboard  from './Containers/ResourceDashboard';
 import StaffDashboard from './Containers/StaffDashboard';
 import ProjectDashboard  from './Containers/ProjectDashboard';
-import Header from './Header';
-import Footer from './Footer';
+import Header from './Containers/Header';
+import Footer from './Containers/Footer';
 
 function App() {
   return (

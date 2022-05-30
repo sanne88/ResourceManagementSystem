@@ -1,10 +1,10 @@
 import {React} from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ResourceDashboard  from './Containers/ResourceDashboard';
-import StaffDashboard from './Containers/StaffDashboard';
-import ProjectDashboard  from './Containers/ProjectDashboard';
-import Header from './Containers/Header';
-import Footer from './Containers/Footer';
+import ResourceDashboard  from './container/ResourceDashboard';
+import StaffDashboard from './container/StaffDashboard';
+import ProjectDashboard  from './container/ProjectDashboard';
+import Header from './container/Header';
+import Footer from './container/Footer';
 
 function App() {
   return (

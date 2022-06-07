@@ -1,2 +1,2 @@
-import { ApiURL } from "../Config/ApiConfig";
+import { ApiURL } from "../Constants/ApiConfig";
 

@@ -24,13 +24,30 @@ function ResourceDashboard()
       }, []);
 
       return(
-<div>
-    
+<div className="dashboard">
+
+<section className="section-skills">   
 { resourceData &&
       resourceData.Skills.map((skill)=> (
         <h4>{skill.SkillName}</h4>     
       ))
  }
+ </section> 
+ <section className="section-resume">
+
+<label> AvailableDate : </label>
+
+<label> Resume : </label>
+
+ </section>
+ <div className="section-projects">
+     <label> Projects Applied</label>
+ { resourceData &&
+      resourceData.Skills.map((skill)=> (
+        <div className="grid-item">{skill.SkillName}</div>     
+      ))
+ }
+ </div>
 </div>
 
 );

@@ -39,7 +39,7 @@
 {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .section-skills{
@@ -62,4 +62,23 @@
 .grid-item{
     text-align: center;
     border: 0 0 0 1px solid rgba(0, 0, 0, 0.8);
+}
+
+.project-items
+{
+    display: grid;
+    grid-template-columns: min-content;
+    
+}
+
+.staff-app
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.section-flex{
+    display: flex;
+    flex-direction: row;
 }

@@ -43,8 +43,8 @@
 }
 
 .section-skills{
-    display: flex;
-    flex-direction: row;
+  padding-top: 4vh;
+  padding-bottom: 4vh;
 }
 
 .section-projects{
@@ -52,6 +52,7 @@
     flex-direction: column;
     justify-items: flex-start;
     justify-content: center;
+    padding-top: 4vh;
 }
 .section-resume{
     display: flex;
@@ -81,4 +82,29 @@
 .section-flex{
     display: flex;
     flex-direction: row;
+}
+
+.btn{
+width :10%;
+background-color: #006cb0;
+border-radius: 12px;
+color: white;
+font-family: ui-monospace;
+border-color: white;
+height: 30px;
+}
+.select{
+    width: 25%;
+}
+
+.span{
+ font-family: ui-monospace;   
+}
+
+.section-current{
+    display: flex;
+    flex-direction: row;
+    justify-items: flex-start;
+    padding-top: 3vh;
+
 }

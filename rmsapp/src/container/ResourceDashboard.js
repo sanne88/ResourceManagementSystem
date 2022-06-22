@@ -90,55 +90,69 @@ const handleSave=()=>{
 
       return(
 <div className="dashboard">
-  <section className="section-skills">
-<span> Add a Skill </span> 
-<ReactSelect
-  options={resourceData && resourceData.skills}
-  isMulti
-  closeMenuOnSelect={false}
-  components={{
-    Option
-  }}
-  onChange={handleSkillCHane}
-  hideSelectedOptions={false}
- value={optSelected}
-/>
-<button onClick={handleClick}> Add Skill</button>
-</section>
 <section className="section-skills">   
-<span> Current Skills : </span>
-
+<span> CURRENT SKILLS : </span>
+<div className="section-current">
+ 
 { resourceData&& resourceData.resourceSkills  &&
       resourceData.resourceSkills.map((skill)=> (
        
-        <h4>{skill.SkillName}</h4>     
+        <h5>{skill.SkillName}</h5>
+             
 
       ))
  }
+ </div>
  </section> 
- <section className="section-resume">
 
-<label> AvailableDate : </label>
+<section className="section-skills">
+  <span> SELECT SKILL</span> 
+  <div className="select">
+  <ReactSelect
+    options={resourceData && resourceData.skills}
+    isMulti
+    closeMenuOnSelect={false}
+    components={{
+      Option
+    }}
+    onChange={handleSkillCHane}
+    hideSelectedOptions={false}
+  value={optSelected}
+  />
+  </div>
+  
+</section>
+
+<button className="btn" onClick={handleClick}> Add Skill</button>
+ <section className="section-skills">
+
+<label> AVAILAIBLE DATE : </label>
 {resourceData&& resourceData.availableDate}
 <DateTimePicker 
 disableClock
 onChange={handleDateChange} 
 value={availDate}
 /> 
-<label> Resume : </label>
 
  </section>
 
- <button onClick={handleSave}> Save</button>
+ <button className="btn" onClick={handleSave}> Save</button>
  <div className="section-projects">
-     <label> Projects Applied</label>
+     <span> PROJECTS APPLIED</span>
+   <table>
+    <th> ProjectName</th>
+    <th> Skill Set</th>
+
  { resourceData &&
       resourceData.projects.map((proj)=> (
-        <div className="grid-item">{proj.ProjectName} 
-      <div className="grid-item">{proj.Skillset} </div>  
-        </div>  
+        <tr>
+          <td   className="grid-item">{proj.ProjectName} </td>
+          <td className="grid-item" >{proj.Skillset} </td>  
+      </tr>
+         
         ))
  }
+ </table>
  </div>
 </div>
 

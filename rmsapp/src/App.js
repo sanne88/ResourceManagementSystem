@@ -11,24 +11,25 @@ import useSessionStorage from './hooks/useSessionStorage';
 function App() {
   const [isAuthenticated, toggleAuthenticationFlag] = useSessionStorage("isAuthenticated");
   const [user, setUser] = useSessionStorage("user");
- 
-  
+  const [page, setPage] = useSessionStorage("title");
+
   const handleLogout = e => {
     e.preventDefault();
     toggleAuthenticationFlag(false);
     setUser(null);
+    setPage(null);
     window.location = window.location.origin + '/login';
   }
 
   return (
     <div className="App">  
-    <Header/>
+    <Header title={page}/>
     <div className='container'> 
     <BrowserRouter>
     <Routes>
-      <Route path="/" element={<ResourceDashboard/>} />        
-      <Route path="/ProjectDashboard" element={<ProjectDashboard />} />
-      <Route path="/StaffDashboard" element={<StaffDashboard />} />
+      <Route path="/" element={<ResourceDashboard  setPage={setPage}/>} />        
+      <Route path="/ProjectDashboard" element={<ProjectDashboard setPage={setPage} />} />
+      <Route path="/StaffDashboard" element={<StaffDashboard  setPage={setPage} />} />
     </Routes>
     </BrowserRouter>
     </div>

@@ -4,6 +4,15 @@ const router = express.Router();
 
 router.get("/GetResourceData", (req, res) => {
   try{
+
+    // req.db.query(
+    //   "SELECT * FROM Events WHERE Event_IsActive = 1",
+    //   function (err, result) {
+    //     if (err) res.status(500);
+    //     res.status(200).json({ events: result });
+    //   }
+    // );
+
   res.status(200).json(
       {
            "skills" : [{ "value": 1 , "label": "JAVA"}, {"value": 2 , "label": "C SHARP"}],

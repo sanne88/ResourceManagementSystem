@@ -4,8 +4,9 @@ import ReactSelect from "react-select";
 import DateTimePicker from "react-datetime-picker";
 import {Resource} from "../component/Resource";
 import {FecthStaffDataURL,FindResourcesURL} from "../Constants/ApiConfig";
-function StaffDashboard()
+function StaffDashboard({setPage})
 {
+        setPage('Staff Dashboard');
 const [ appData,setAppData]=React.useState(null);
 const [ optSelected,setOptSelected]=React.useState(null);
 const [ resData,setResData]=React.useState(null);
@@ -74,9 +75,9 @@ const fetchDashboardData = () => {
    };
     return(
         <div className="staff-app">
-        <section id="search"> 
-        <span> Select Skill </span> 
-        <ReactSelect
+        <section id="search" className="section-row"> 
+        <span className="span"> SELECT SKILL </span> 
+        <ReactSelect className="select"
   options={appData && appData.skills}
   isMulti
   closeMenuOnSelect={false}
@@ -87,21 +88,33 @@ const fetchDashboardData = () => {
   hideSelectedOptions={false}
  value={optSelected}
 />
-<span>Select Date:</span>
+
+        </section>
+        <section className="section-row">
+        <span className="span">SELECT DATE:</span>   
 <DateTimePicker 
 disableClock
 onChange={handleDateChange} 
 value={availDate}
 /> 
-<button onClick={findResources}>Find Resources </button>
+<button className="btn" onClick={findResources}>Find Resources </button>
         </section>
         <br/>
-        <section>
+        <section className="section-grid">
+         <div className="section-row">
+                <span className="item"> Resource Name</span>
                 
+                <span className="item"> Skill Set</span>
+                <span className="item">AvailableDate</span>
+                <span className="item">Current Status</span>
+                <span className="item">IsHired</span>
+                </div>   
+                 
         {resData && resData.resources.map ((res)=> (
 <Resource props={res} userId={res.userId} updateStatus={ updateStatus}/>
 
         ))
+        
 }
 
 </section>

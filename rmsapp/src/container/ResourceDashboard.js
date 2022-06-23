@@ -5,9 +5,9 @@ import { FetchResourceURL, UpdateResourceDataURL } from "../Constants/ApiConfig"
 import DateTimePicker from 'react-datetime-picker';
 import {Option} from "../component/Option";
 import {toast} from "react-toastify";
-function ResourceDashboard()
+function ResourceDashboard({setPage})
 {
-
+setPage('Resource Dashboard');
 const [resourceData, setResourceData] = React.useState(null);
 const [ availDate,setDate]=React.useState(()=> new Date());
 const [ optSelected,setOptSelected]=React.useState(null);
@@ -105,9 +105,10 @@ const handleSave=()=>{
  </div>
  </section> 
 
-<section className="section-skills">
-  <span> SELECT SKILL</span> 
-  <div className="select">
+<section className="section-grid">
+ 
+  <span className="item"> SELECT SKILL</span> 
+  <div className="select item">
   <ReactSelect
     options={resourceData && resourceData.skills}
     isMulti
@@ -121,38 +122,40 @@ const handleSave=()=>{
   />
   </div>
   
+<button className="btn btnWidth" id="btnAdd" onClick={handleClick}> Add Skill</button>
+
 </section>
 
-<button className="btn" onClick={handleClick}> Add Skill</button>
  <section className="section-skills">
 
-<label> AVAILAIBLE DATE : </label>
-{resourceData&& resourceData.availableDate}
+<span> AVAILAIBLE DATE : </span>
 <DateTimePicker 
 disableClock
 onChange={handleDateChange} 
 value={availDate}
 /> 
 
+{resourceData&& resourceData.availableDate}
  </section>
 
- <button className="btn" onClick={handleSave}> Save</button>
- <div className="section-projects">
+ <button className="btn btnWidth" onClick={handleSave}> Save</button>
+ <div className="section-grid">
      <span> PROJECTS APPLIED</span>
-   <table>
-    <th> ProjectName</th>
-    <th> Skill Set</th>
+     <div className="section-row">
+  
+    <span className="item"> ProjectName</span>
+    <span className="item"> Skill Set</span>
+    </div>
 
  { resourceData &&
       resourceData.projects.map((proj)=> (
-        <tr>
-          <td   className="grid-item">{proj.ProjectName} </td>
-          <td className="grid-item" >{proj.Skillset} </td>  
-      </tr>
+        <div className="section-row">
+          <span  className="item">{proj.ProjectName} </span>
+          <span className="item" >{proj.Skillset} </span>  
+     </div>
          
         ))
  }
- </table>
  </div>
 </div>
 

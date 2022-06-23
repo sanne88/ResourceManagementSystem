@@ -6,7 +6,8 @@ router.get("/GetProjects", (req, res) => {
     try{
     res.status(200).json(
         {
-             "projects": [{"ProjectId": 1, "ProjectName": "Project1","SkillSet": "JAVA"}, {"ProjectId":"2", "ProjectName": "Project2","SKillSet":"C SHARP"}]
+             "projects": [{"ProjectId": 1, "ProjectName": "Project1","SkillSet": "JAVA", "Status":"Active","StartDate":"","NoOfResources":"8" },
+              {"ProjectId":"2", "ProjectName": "Project2","SKillSet":"C SHARP", "Status":"Active","StartDate":"","NoOfResources":"8"}]
         
         });
       }

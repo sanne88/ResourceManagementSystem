@@ -1,9 +1,9 @@
-function Header()
+function Header({title})
 {
     return(
     <div className="header">
         
-        <h2 className="title"> Resource Management System</h2>
+        <h3 className="title"> {title}</h3>
 
     </div>
 

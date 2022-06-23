@@ -2,11 +2,12 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { loginURL } from  "../Constants/ApiConfig";
 
-function LoginPage({ toggleAuthenticationFlag, setUser }) {
+function LoginPage({ toggleAuthenticationFlag, setUser ,setPage }) {
   const [data, setData] = React.useState({
     email: "",
     password: "",
   });
+  setPage('Resource Management System');
   const [error, setError] = React.useState(null);
   const navigate = useNavigate();
 
@@ -43,62 +44,63 @@ function LoginPage({ toggleAuthenticationFlag, setUser }) {
   };
 
   return (
-    <div style={{ background: `url(${backgroundImg})`, height: "80vh" }}>
-      <div className="container h-100">
-        <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="col-10 col-md-7 col-lg-5">
-            <div className="card" style={{ borderRadius: "15px" }}>
-              <div className="card-body p-5">
-                <h3 className="text-uppercase text-center mb-3">Sign in</h3>
+    <div style={{  height: "80vh" }}>
+   
+    
+              <div className="login">
+                <h3 >Sign in</h3>
                 <form onSubmit={submitHandler}>
-                  <div className="form-outline mb-3">
+                  <div >
+                    
+                  <span >
+                      Email     
+                    </span>
+                    <br/>
                     <input
                       type="text"
                       name="email"
-                      className="form-control form-control-md"
+                      
                       value={email}
                       required
                       placeholder=" Email Address"
                       onChange={changeHandler}
                     />
-                    <label className="form-label" htmlFor="form3Example1cg">
-                      Email
-                    </label>
+                    
                   </div>
-                  <div className="form-outline mb-3">
+                  <br/>
+                  <div >
+                    
+                  <span >
+                      Password   
+                    </span>
+                    <br/>
                     <input
                       type="password"
                       name="password"
-                      className="form-control form-control-md"
                       value={password}
                       placeholder=" Password"
                       required
                       minLength={8}
                       onChange={changeHandler}
                     />
-                    <label className="form-label" htmlFor="form3Example1cg">
-                      Password
-                    </label>
                   </div>
-                  <div className="d-flex justify-content-center">
+                  <div>
                     <input
                       type="submit"
                       name="submit"
-                      className="btn bg-pink btn-block btn-md"
+                      className="btn"
                     />
                   </div>
                 </form>
                 {
-                  <div className="error-message d-flex justify-content-center">
+                  <div className="error-msg">
                     {error}
                   </div>
                 }
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
+          
+   
   );
 }
 

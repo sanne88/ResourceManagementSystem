@@ -42,7 +42,7 @@ function ProjectDashboard({setPage})
 <span className="item"> {item.SkillSet}</span>
 <span className="item"> {item.StartDate}</span>
 
-<span className="item"> {item.NoOFResources}</span>
+<span className="item"> {item.NoOfResources}</span>
 <span className="item"> {item.Status}</span>
                    </div>
                      

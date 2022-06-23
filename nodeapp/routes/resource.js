@@ -4,23 +4,25 @@ const router = express.Router();
 
 router.get("/GetResourceData", (req, res) => {
   try{
+    let sql = `SELECT Skillid as value ,Name as label from Skill where IsActive=1;SELECT e.userid , s.Skillid ,s.Name from employeeskillmap e join Skill s on e.skillid=s.Skillid and s.IsActive=1;
+    select  p.Name as ProjectName,p.Project_Id as ProjectId ,group_concat(s.Name) as SkillSet from employeeprojetmap e   inner join Project p on p.Project_id=e.projectid and e.isactive=1    inner join projectskillmap ps on ps.projectid=p.Project_id  inner join Skill s on ps.Skillid = s.skillid and s.IsActive=1 where e.userid=3  group by p.Project_id;select AvailableDate from Users where userid=3;`;
+    req.multiple=true;
+    req.db.query(
+      sql,
+      function (err, result) {
+        if (err) res.status(500);
+        res.status(200).json({ "skills": result[0], "resourceSkills":result[1],"projects":result[2],"availableDate":result[3][0].AvailableDate });
+      }
+    );
 
-    // req.db.query(
-    //   "SELECT * FROM Events WHERE Event_IsActive = 1",
-    //   function (err, result) {
-    //     if (err) res.status(500);
-    //     res.status(200).json({ events: result });
-    //   }
-    // );
-
-  res.status(200).json(
-      {
-           "skills" : [{ "value": 1 , "label": "JAVA"}, {"value": 2 , "label": "C SHARP"}],
-           "resourceSkills":[{ "UserId": 1, "SkillId":1 ,"SkillName": "JAVA"}],
-           "availableDate": "",
-           "projects": [{"ProjectId": 1, "ProjectName": "Project1"}, {"ProjectId":"2", "ProjectName": "Project2"}]
+  // res.status(200).json(
+  //     {
+  //          "skills" : [{ "value": 1 , "label": "JAVA"}, {"value": 2 , "label": "C SHARP"}],
+  //          "resourceSkills":[{ "UserId": 1, "SkillId":1 ,"SkillName": "JAVA"}],
+  //          "availableDate": "",
+  //          "projects": [{"ProjectId": 1, "ProjectName": "Project1"}, {"ProjectId":"2", "ProjectName": "Project2"}]
       
-      });
+  //     });
     }
     catch(err)
     {

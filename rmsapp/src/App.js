@@ -7,6 +7,7 @@ import Header from './component/Header';
 import "./Styles/index.css";
 import Footer from './component/Footer';
 import useSessionStorage from './hooks/useSessionStorage';
+import LoginPage from './container/LoginPage';
 
 function App() {
   const [isAuthenticated, toggleAuthenticationFlag] = useSessionStorage("isAuthenticated");
@@ -27,7 +28,9 @@ function App() {
     <div className='container'> 
     <BrowserRouter>
     <Routes>
-      <Route path="/" element={<ResourceDashboard  setPage={setPage}/>} />        
+      <Route path="/" element={<ResourceDashboard  setPage={setPage}/>} />    
+      <Route path="/login" element={<LoginPage setPage={setPage} toggleAuthenticationFlag={toggleAuthenticationFlag}
+                setUser={setUser} /> } />   
       <Route path="/ProjectDashboard" element={<ProjectDashboard setPage={setPage} />} />
       <Route path="/StaffDashboard" element={<StaffDashboard  setPage={setPage} />} />
     </Routes>

@@ -3,6 +3,7 @@ import {Option} from "../component/Option";
 import ReactSelect from "react-select";
 import DateTimePicker from "react-datetime-picker";
 import {Resource} from "../component/Resource";
+import { Link } from "react-router-dom";
 import {FecthStaffDataURL,FindResourcesURL} from "../Constants/ApiConfig";
 function StaffDashboard({setPage})
 {
@@ -14,7 +15,6 @@ const [ resData,setResData]=React.useState(null);
 const [ availDate,setDate]=React.useState(()=> new Date());
 
 const updateStatus=(userId)=>{
-        console.log('asd');
         console.log(userId);
         let data ={...resData};
 data.resources[0].Status='B';
@@ -29,9 +29,17 @@ const handleDateChange=(e)=>{
        }
 const findResources=() =>
 {
+        let values =[];
+      if(optSelected!=null)
+      {
+         values = optSelected.map(function(item) {
+                return item.value;
+             });
+
+        }
         let data = {
-                "Skills": optSelected,
-                "AvailableDate": availDate
+                "Skills": values,
+                "AvailableDate": new Date(availDate)
         }
         const url=FindResourcesURL;
         fetch(url,
@@ -71,6 +79,7 @@ const fetchDashboardData = () => {
 
 
  const handleSkillCHane=(selected)=>{
+      
     setOptSelected(selected);
    };
     return(
@@ -110,7 +119,7 @@ value={availDate}
                 <span className="item">IsHired</span>
                 </div>   
                  
-        {resData && resData.resources.map ((res)=> (
+        {resData && resData.resources && resData.resources.map ((res)=> (
 <Resource props={res} userId={res.userId} updateStatus={ updateStatus}/>
 
         ))
@@ -118,6 +127,8 @@ value={availDate}
 }
 
 </section>
+
+<Link   to="/ProjectDashboard" > VIEW PROJECTS</Link>
         </div>
       
     );

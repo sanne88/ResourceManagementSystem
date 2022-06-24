@@ -5,14 +5,15 @@ const router = express.Router();
 
 router.get('/GetDashboard', async (req, res) => {
   try {
-    res.status(200).json(
-      {
-           "skills" : [{ "value": 1 , "label": "JAVA"}, {"value": 2 , "label": "C SHARP"}],
-           "availableDate": "",
-        
-      
-      });
-   
+    let sql = `SELECT Skillid as value ,Name as label from Skill where IsActive=1;`;
+    req.multiple=true;
+    req.db.query(
+      sql,
+      function (err, result) {
+        if (err) res.status(500);
+        res.status(200).json({ "skills": result });
+      }
+    );
   } catch (err){
     console.log(err)
     res.status(500).send()
@@ -20,16 +21,32 @@ router.get('/GetDashboard', async (req, res) => {
 });
 router.post('/findResources', async (req, res) => {
     try {
-     const { filterData} = req.body;
+     const { Skills,AvailableDate} = req.body;
    //filter the resources avilable
-   res.status(200).json(
-    {
-         "resources" : [{ "userId": 1 , "userName": "Res1", "skillSet": "CHARP, JAVA" ,"availableDate": "","status":"" },
-         { "userId": 2 , "userName": "Res2", "skillSet": "CHARP" ,"availableDate": "A","Status":"A" }],
+   let sql ='';
+   if(Skills!=null && Skills.Length >0)
+  
+  sql = `SELECT u.userid as userId ,u.Username as userName,u.AvailableDate  as availableDate,u.IsActive as Status , group_concat(s.Name) as Skillset from  Users u join   employeeskillmap e on u.Userid= e.userid and u.AvailableDate <= '${AvailableDate}'  and u.IsActive=1 join Skill s on e.skillid=s.Skillid and s.IsActive=1  and s.Skillid in (?) group by  u.userid, u.Username,u.AvailableDate;`;
+  else
+  sql = `SELECT u.userid as userId ,u.Username as userName,u.AvailableDate  as availableDate,u.IsActive as Status , group_concat(s.Name) as Skillset from  Users u join   employeeskillmap e on u.Userid= e.userid and u.AvailableDate <= '${AvailableDate}'  and u.IsActive=1 join Skill s on e.skillid=s.Skillid and s.IsActive=1 group by  u.userid, u.Username,u.AvailableDate;`;
+  
+  req.db.query(
+     sql,[Skills],
+     function (err, result) {
+    
+       if (err) res.status(500);
+       res.status(200).json({ "resources": result });
+     }
+   );
+
+  //  res.status(200).json(
+  //   {
+  //        "resources" : [{ "userId": 1 , "userName": "Res1", "skillSet": "CHARP, JAVA" ,"availableDate": "","status":"" },
+  //        { "userId": 2 , "userName": "Res2", "skillSet": "CHARP" ,"availableDate": "A","Status":"A" }],
          
       
     
-    });
+  //   });
 
      
     } catch (err){

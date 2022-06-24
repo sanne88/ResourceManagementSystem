@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get("/GetResourceData", (req, res) => {
   try{
-    let sql = `SELECT Skillid as value ,Name as label from Skill where IsActive=1;SELECT e.userid , s.Skillid ,s.Name from employeeskillmap e join Skill s on e.skillid=s.Skillid and s.IsActive=1;
+    let sql = `SELECT Skillid as value ,Name as label from Skill where IsActive=1;SELECT e.userid , s.Skillid ,s.Name from employeeskillmap e join Skill s on e.skillid=s.Skillid and s.IsActive=1 and e.userid=3;
     select  p.Name as ProjectName,p.Project_Id as ProjectId ,group_concat(s.Name) as SkillSet from employeeprojetmap e   inner join Project p on p.Project_id=e.projectid and e.isactive=1    inner join projectskillmap ps on ps.projectid=p.Project_id  inner join Skill s on ps.Skillid = s.skillid and s.IsActive=1 where e.userid=3  group by p.Project_id;select AvailableDate from Users where userid=3;`;
     req.multiple=true;
     req.db.query(
@@ -33,9 +33,27 @@ router.get("/GetResourceData", (req, res) => {
   
  router.post('/updateData', async (req, res) => {
    try {
-    const { resourceData} = req.body;
+    const { AvailableDate, Skills} = req.body;
+  
     //updaet skill and avilable date
-    res.status(201).json({ message: "Save Succesfull!" });
+    const query =
+        `UPDATE Users set AvailableDate= "${AvailableDate}" where userid=3`;
+        console.log(Skills);
+    
+      req.db.query(query, function (err, result) {
+        if (err) throw err;
+      //  res.status(201).json({ message: "Success" });
+        console.log("Number of records updated: " + result.affectedRows);
+      });
+
+    const insertquery = "INSERT INTO employeeskillmap (userid, skillid) VALUES ?";
+   
+    req.db.query(insertquery, [Skills], function (err, result) {
+      if (err) throw err;
+      res.status(201).json({ message: "Success" });
+      console.log("Number of records inserted: " + result.affectedRows);
+    });
+      
     
    } catch (err){
      console.log(err)

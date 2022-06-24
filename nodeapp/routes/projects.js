@@ -4,12 +4,23 @@ const router = express.Router();
 
 router.get("/GetProjects", (req, res) => {
     try{
-    res.status(200).json(
-        {
-             "projects": [{"ProjectId": 1, "ProjectName": "Project1","SkillSet": "JAVA", "Status":"Active","StartDate":"","NoOfResources":"8" },
-              {"ProjectId":"2", "ProjectName": "Project2","SKillSet":"C SHARP", "Status":"Active","StartDate":"","NoOfResources":"8"}]
+      let sql = ` select  p.Name as ProjectName,p.Project_Id as ProjectId ,group_concat(s.Name) as SkillSet,p.IsActive as Status,p.TeamSize as NoOfResources  from  Project p   inner join projectskillmap ps on ps.projectid=p.Project_id  inner join Skill s on ps.Skillid = s.skillid and s.IsActive=1  group by p.Project_id;`;
+      req.multiple=true;
+      req.db.query(
+        sql,
+        function (err, result) {
+          if (err) res.status(500);
+          res.status(200).json({ "projects": result });
+        }
+      );
+
+      
+    // res.status(200).json(
+    //     {
+    //          "projects": [{"ProjectId": 1, "ProjectName": "Project1","SkillSet": "JAVA", "Status":"Active","StartDate":"","NoOfResources":"8" },
+    //           {"ProjectId":"2", "ProjectName": "Project2","SKillSet":"C SHARP", "Status":"Active","StartDate":"","NoOfResources":"8"}]
         
-        });
+    //     });
       }
       catch(err)
       {

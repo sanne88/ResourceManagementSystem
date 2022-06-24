@@ -1,6 +1,6 @@
 import * as React from "react";
 import ReactSelect from "react-select";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FetchResourceURL, UpdateResourceDataURL } from "../Constants/ApiConfig";
 import DateTimePicker from 'react-datetime-picker';
 import {Option} from "../component/Option";
@@ -11,11 +11,11 @@ setPage('Resource Dashboard');
 const [resourceData, setResourceData] = React.useState(null);
 const [ availDate,setDate]=React.useState(()=> new Date());
 const [ optSelected,setOptSelected]=React.useState(null);
-
+const [ lstSkill, setList] =React.useState([]);
 const handleSave=()=>{
   let data ={
-"AvailableDate": resourceData.availDate,
-"ResourceSKills": resourceData.resourceSkills
+"AvailableDate":  new Date(resourceData.availableDate),
+"Skills": lstSkill
 
   };
 
@@ -53,12 +53,16 @@ const handleSave=()=>{
     if(optSelected!=null)
     {
       optSelected.map((item)=>{
-      data.resourceSkills.push({"UserId":1, "SkillId": item.value,"SkillName": item.label });
-
+      data.resourceSkills.push({"userid":1, "Skillid": item.value,"Name": item.label });
+      if(lstSkill.indexOf(item.value)==-1)
+       lstSkill.push([3,item.value]); 
     })
     }
     setResourceData(data);
+    setList(lstSkill);
     setOptSelected(null);
+
+
   };
 
  const handleSkillCHane=(selected)=>{
@@ -78,6 +82,7 @@ const handleSave=()=>{
           .then((res) => res.json())
           .then((res) => {
             setResourceData(res);
+            setDate( new Date(res.availableDate));
           })
           .catch((err) => {
          //   setError("failed to fetch data!");
@@ -97,10 +102,8 @@ const handleSave=()=>{
 { resourceData&& resourceData.resourceSkills  &&
       resourceData.resourceSkills.map((skill)=> (
        
-        <h5>{skill.SkillName}</h5>
-             
-
-      ))
+        <h5>{skill.Name} </h5>
+           ))
  }
  </div>
  </section> 
@@ -151,12 +154,13 @@ value={availDate}
       resourceData.projects.map((proj)=> (
         <div className="section-row">
           <span  className="item">{proj.ProjectName} </span>
-          <span className="item" >{proj.Skillset} </span>  
+          <span className="item" >{proj.SkillSet} </span>  
      </div>
          
         ))
  }
  </div>
+ <Link   to="/ProjectDashboard" > VIEW PROJECTS</Link>
 </div>
 
 );

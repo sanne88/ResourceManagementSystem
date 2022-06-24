@@ -12,3 +12,4 @@ export const loginURL = `${ApiURL}/resource/authenticate`;
 
 export const FecthStaffDataURL= `${ApiURL}staff/GetDashboard`;
 export const FindResourcesURL= `${ApiURL}staff/findResources`;
+export const UpdateStatusURL= `${ApiURL}staff/updateStatus`;

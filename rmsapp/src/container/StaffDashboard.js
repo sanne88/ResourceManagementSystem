@@ -4,7 +4,8 @@ import ReactSelect from "react-select";
 import DateTimePicker from "react-datetime-picker";
 import {Resource} from "../component/Resource";
 import { Link } from "react-router-dom";
-import {FecthStaffDataURL,FindResourcesURL} from "../Constants/ApiConfig";
+import {FecthStaffDataURL,FindResourcesURL,UpdateStatusURL} from "../Constants/ApiConfig";
+
 function StaffDashboard({setPage})
 {
         setPage('Staff Dashboard');
@@ -14,13 +15,33 @@ const [ resData,setResData]=React.useState(null);
 
 const [ availDate,setDate]=React.useState(()=> new Date());
 
-const updateStatus=(userId)=>{
-        console.log(userId);
-        let data ={...resData};
-data.resources[0].Status='B';
+const updateStatus=(userId,ishired,projectmapid)=>{
+        console.log('proj'+projectmapid);
+        //call upate status
+        let data = {
+             "userid":userId,
+             "ishired":ishired,
+             "projectid":projectmapid
+        }
+        const url=UpdateStatusURL;
+        fetch(url,
+                {
+                        method: "POST",
+                        headers: {
+                          Accept: "application/json",
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(data),
+                })
+        .then((res) => res.json())
+        .then((res) => {
+            //  setResData(res);
+        })
+        .catch((err) => {
+       //   setError("failed to fetch data!");
+        });
+    
 
-console.log(data);
-setResData(data);
 }
 
 const handleDateChange=(e)=>{
@@ -53,6 +74,7 @@ const findResources=() =>
                 })
         .then((res) => res.json())
         .then((res) => {
+        
               setResData(res);
         })
         .catch((err) => {

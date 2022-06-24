@@ -6,7 +6,7 @@ export function Resource({props,userId,updateStatus})
   <span className="item">    {props.Skillset}</span> 
   <span className="item">   {props.availableDate}</span> 
   <span className="item">  {props.Status}</span> 
-     <input type="checkbox" id={props.userId} className="item" onChange={updateStatus}  />
+  <input type="checkbox" id={props.userId} checked={props.ishired} className="item" onChange={e => updateStatus(props.userId,e.target.checked,props.projectmapid)}  />
       </div>
       
 

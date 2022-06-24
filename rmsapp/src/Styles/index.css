@@ -9,7 +9,6 @@
 
 .header{
     min-height: 10vh;
-    text-align: center;
     background-color: #006cb0;
     color:white;
     
@@ -17,6 +16,7 @@
 .title
 {
     padding-top: 2vh;
+    text-align: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .App{

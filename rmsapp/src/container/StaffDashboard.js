@@ -16,7 +16,6 @@ const [ resData,setResData]=React.useState(null);
 const [ availDate,setDate]=React.useState(()=> new Date());
 
 const updateStatus=(userId,ishired,projectmapid)=>{
-        console.log('proj'+projectmapid);
         //call upate status
         let data = {
              "userid":userId,

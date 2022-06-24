@@ -15,21 +15,22 @@ function App() {
   const [page, setPage] = useSessionStorage("title");
 
   const handleLogout = e => {
+    
     e.preventDefault();
     toggleAuthenticationFlag(false);
     setUser(null);
     setPage(null);
-    window.location = window.location.origin + '/login';
+    window.location = window.location.origin + '/';
   }
 
   return (
     <div className="App">  
-    <Header title={page}/>
+    <Header title={page} handleLogout={handleLogout} isAuthenticated={isAuthenticated}/>
     <div className='container'> 
     <BrowserRouter>
     <Routes>
-      <Route path="/" element={<ResourceDashboard  setPage={setPage}/>} />    
-      <Route path="/login" element={<LoginPage setPage={setPage} toggleAuthenticationFlag={toggleAuthenticationFlag}
+      <Route path="/resource" element={<ResourceDashboard  setPage={setPage} user={user}/>} />    
+      <Route path="/" element={<LoginPage setPage={setPage} toggleAuthenticationFlag={toggleAuthenticationFlag}
                 setUser={setUser} /> } />   
       <Route path="/ProjectDashboard" element={<ProjectDashboard setPage={setPage} />} />
       <Route path="/StaffDashboard" element={<StaffDashboard  setPage={setPage} />} />

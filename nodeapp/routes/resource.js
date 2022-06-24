@@ -33,11 +33,11 @@ router.get("/GetResourceData", (req, res) => {
   
  router.post('/updateData', async (req, res) => {
    try {
-    const { AvailableDate, Skills} = req.body;
+    const { AvailableDate, Skills,userId} = req.body;
   
     //updaet skill and avilable date
     const query =
-        `UPDATE Users set AvailableDate= "${AvailableDate}" where userid=3`;
+        `UPDATE Users set AvailableDate= "${AvailableDate}" where userid=${userId}`;
         console.log(Skills);
     
       req.db.query(query, function (err, result) {
@@ -68,7 +68,7 @@ router.get("/GetResourceData", (req, res) => {
         if (!result || !result.length) {
            return res.status(400).send('Cannot find user')
          }
-         if(await bcrypt.compare(req.body.password, result[0].User_Password)) {
+         if(req.body.password == result[0].User_Password) {
            res.status(200).json({ message: 'Success', data: result[0]})
          } else {
           res.status(400).json({ message: 'Invalid Credentials!'})

@@ -18,6 +18,7 @@ function LoginPage({ toggleAuthenticationFlag, setUser ,setPage }) {
   };
 
   const submitHandler = (e) => {
+   
     e.preventDefault();
     fetch(loginURL, {
       method: "POST",
@@ -32,7 +33,11 @@ function LoginPage({ toggleAuthenticationFlag, setUser ,setPage }) {
         if (res.message === "Success") {
           toggleAuthenticationFlag(true);
           setUser(res.data);
-          navigate("/resource");
+          //based on role redirect
+          if(res.data.Role=="Manager")
+           navigate("/StaffDashboard");
+           else
+           navigate("/resource");
         }
         else{
           setError('Invalid email or password!')

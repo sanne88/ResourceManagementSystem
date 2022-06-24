@@ -5,7 +5,7 @@ import { FetchResourceURL, UpdateResourceDataURL } from "../Constants/ApiConfig"
 import DateTimePicker from 'react-datetime-picker';
 import {Option} from "../component/Option";
 import {toast} from "react-toastify";
-function ResourceDashboard({setPage})
+function ResourceDashboard({setPage,user})
 {
 setPage('Resource Dashboard');
 const [resourceData, setResourceData] = React.useState(null);
@@ -13,9 +13,11 @@ const [ availDate,setDate]=React.useState(()=> new Date());
 const [ optSelected,setOptSelected]=React.useState(null);
 const [ lstSkill, setList] =React.useState([]);
 const handleSave=()=>{
+  console.log(user);
   let data ={
 "AvailableDate":  new Date(resourceData.availableDate),
-"Skills": lstSkill
+"Skills": lstSkill,
+"userId": user.Userid
 
   };
 
@@ -53,7 +55,7 @@ const handleSave=()=>{
     if(optSelected!=null)
     {
       optSelected.map((item)=>{
-      data.resourceSkills.push({"userid":1, "Skillid": item.value,"Name": item.label });
+      data.resourceSkills.push({"userid":user.userId, "Skillid": item.value,"Name": item.label });
       if(lstSkill.indexOf(item.value)==-1)
        lstSkill.push([3,item.value]); 
     })

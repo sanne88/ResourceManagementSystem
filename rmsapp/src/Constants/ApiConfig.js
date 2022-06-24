@@ -7,9 +7,10 @@ export const UpdateResourceDataURL= `${ApiURL}resource/updateData`;
 
 export const FecthProjectsURL= `${ApiURL}projects/GetProjects`;
 
-export const loginURL = `${ApiURL}/resource/authenticate`;
+export const loginURL = `${ApiURL}resource/authenticate`;
 
 
 export const FecthStaffDataURL= `${ApiURL}staff/GetDashboard`;
 export const FindResourcesURL= `${ApiURL}staff/findResources`;
 export const UpdateStatusURL= `${ApiURL}staff/updateStatus`;
+

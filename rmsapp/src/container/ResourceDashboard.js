@@ -114,7 +114,7 @@ const handleSave=()=>{
  
   <span className="item"> SELECT SKILL</span> 
   <div className="select item">
-  <ReactSelect
+  <ReactSelect name="select-skill"
     options={resourceData && resourceData.skills}
     isMulti
     closeMenuOnSelect={false}
@@ -127,7 +127,7 @@ const handleSave=()=>{
   />
   </div>
   
-<button className="btn btnWidth" id="btnAdd" onClick={handleClick}> Add Skill</button>
+<button className="btn btnWidth" id="btnAdd" name="AddSkill" onClick={handleClick}> Add Skill</button>
 
 </section>
 
@@ -143,7 +143,7 @@ value={availDate}
 {resourceData&& resourceData.availableDate}
  </section>
 
- <button className="btn btnWidth" onClick={handleSave}> Save</button>
+ <button className="btn btnWidth" onClick={handleSave} name="save"> Save</button>
  <div className="section-grid">
      <span> PROJECTS APPLIED</span>
      <div className="section-row">

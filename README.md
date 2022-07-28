@@ -19,4 +19,13 @@ Organizations are often trying to create a baseline for the PM role. This ensure
 1. Retrieve Data from AWS MYSQL Instance to display in React Screens
 2. Fetch Employee Data (Skill, Available Date)
 3. Update the Skill , and Available Date and the details are saved in Database
-4. View the Projects Available for the Employee
+4. Login User for employee role
+5. Selenium Test case for Login functinality
+
+
+#Release Notes Code MileStone 3
+
+1. Retrieve Data from AWS MYSQL Instance to display in React Screens
+2. Fetch Staff Dash board Data 
+3. Login User for staff role
+5. Test cases for staff dashboard

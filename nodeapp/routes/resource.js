@@ -47,7 +47,7 @@ router.get("/GetResourceData", (req, res) => {
       });
 
     const insertquery = "INSERT INTO employeeskillmap (userid, skillid) VALUES ?";
-   
+   console.log(insertquery)
     req.db.query(insertquery, [Skills], function (err, result) {
       if (err) throw err;
       res.status(201).json({ message: "Success" });

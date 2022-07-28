@@ -59,7 +59,7 @@ const findResources=() =>
         }
         let data = {
                 "Skills": values,
-                "AvailableDate": new Date(availDate)
+                "AvailableDate": availDate
         }
         const url=FindResourcesURL;
         fetch(url,

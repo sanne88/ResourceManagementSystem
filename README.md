@@ -29,3 +29,12 @@ Organizations are often trying to create a baseline for the PM role. This ensure
 2. Fetch Staff Dash board Data 
 3. Login User for staff role
 5. Test cases for staff dashboard
+
+
+
+#Release Notes Code MileStone 4
+
+1. View Projects in Staff Dashboard
+2. Fetch Staff Dash board Data with appropriate filters
+3. Update Is Hired
+4. Test cases for the Updating status and for resources

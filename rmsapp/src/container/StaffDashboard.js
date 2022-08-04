@@ -34,6 +34,7 @@ const updateStatus=(userId,ishired,projectmapid)=>{
                 })
         .then((res) => res.json())
         .then((res) => {
+                findResources();
             //  setResData(res);
         })
         .catch((err) => {
@@ -75,6 +76,7 @@ const findResources=() =>
         .then((res) => {
         
               setResData(res);
+              console.log(res);
         })
         .catch((err) => {
        //   setError("failed to fetch data!");

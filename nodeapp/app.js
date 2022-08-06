@@ -9,7 +9,26 @@ const resourceRouter = require('./routes/resource');
 const projectRouter = require('./routes/projects');
 const staffRouter = require('./routes/staff');
 
+//const swaggerUI = require('swagger-ui-express');
+//const swaggerJsdoc = require('swagger-jsdoc');
+//const swaggerDoc=require('./swagger.json');
+// const options = {
+//    failOnErrors: true, // Whether or not to throw when parsing errors. Defaults to false.
+//    definition: {
+//      openapi: '3.0.0',
+//      info: {
+//        title: 'RMS',
+//        version: '1.0.0',
+//      },
+//    },
+  
+  
+//    apis: ['./routes/*.js'],
+//  };
+ //const openapiSpecification = swaggerJsdoc(options);
+ //const specs = swaggerJsDoc(options);
 const app = express();
+//app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
 
 

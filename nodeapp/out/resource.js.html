@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: resource.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: resource.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** Express router providing user related routes
+ * @module routers/resource
+ * @requires express
+ */
+/**
+ * express module
+ * @const
+ */
+const express = require('express');
+//const bcrypt = require('bcrypt');
+/**
+ * Express router to mount user related functions on.
+ * @type {object}
+ * @const
+ * @namespace resourceRouter
+ */
+const router = express.Router();
+
+/**
+ * Route to Get All Projects
+ * @name /Get Resource Details Skill set , Avilable Date, Projects mapped
+ * @function
+ * @memberof module:routers/resource~resourceRouter
+ * @inner
+ * @param {string} UserId- User Details
+ */
+router.get("/GetResourceData", (req, res) => {
+  try{
+    let sql = `SELECT Skillid as value ,Name as label from Skill where IsActive=1;SELECT e.userid , s.Skillid ,s.Name from employeeskillmap e join Skill s on e.skillid=s.Skillid and s.IsActive=1 and e.userid=3;
+    select  p.Name as ProjectName,p.Project_Id as ProjectId ,group_concat(s.Name) as SkillSet from employeeprojetmap e   inner join Project p on p.Project_id=e.projectid and e.isactive=1    inner join projectskillmap ps on ps.projectid=p.Project_id  inner join Skill s on ps.Skillid = s.skillid and s.IsActive=1 where e.userid=3  group by p.Project_id;select AvailableDate from Users where userid=3;`;
+    req.multiple=true;
+    req.db.query(
+      sql,
+      function (err, result) {
+        if (err) res.status(500);
+        res.status(200).json({ "skills": result[0], "resourceSkills":result[1],"projects":result[2],"availableDate":result[3][0].AvailableDate });
+      }
+    );
+
+  // res.status(200).json(
+  //     {
+  //          "skills" : [{ "value": 1 , "label": "JAVA"}, {"value": 2 , "label": "C SHARP"}],
+  //          "resourceSkills":[{ "UserId": 1, "SkillId":1 ,"SkillName": "JAVA"}],
+  //          "availableDate": "",
+  //          "projects": [{"ProjectId": 1, "ProjectName": "Project1"}, {"ProjectId":"2", "ProjectName": "Project2"}]
+      
+  //     });
+    }
+    catch(err)
+    {
+      console.log(err);
+    }
+  });
+
+  
+
+/**
+ * Route to Get All Projects
+ * @name /POST Resource Details Skill set , Avilable Date
+ * @function
+ * @memberof module:routers/resource~resourceRouter
+ * @inner
+ * @param {string} skillset - Multiple skills selected 
+ * @param {string} AvailableDate - Date Selected
+ * @param {string} userid - User Id to update data
+ */
+ router.post('/updateData', async (req, res) => {
+   try {
+    const { AvailableDate, Skills,userId} = req.body;
+  
+    //updaet skill and avilable date
+    const query =
+        `UPDATE Users set AvailableDate= "${AvailableDate}" where userid=${userId}`;
+        console.log(Skills);
+    
+      req.db.query(query, function (err, result) {
+        if (err) throw err;
+      //  res.status(201).json({ message: "Success" });
+        console.log("Number of records updated: " + result.affectedRows);
+      });
+
+    const insertquery = "INSERT INTO employeeskillmap (userid, skillid) VALUES ?";
+   console.log(insertquery)
+    req.db.query(insertquery, [Skills], function (err, result) {
+      if (err) throw err;
+      res.status(201).json({ message: "Success" });
+      console.log("Number of records inserted: " + result.affectedRows);
+    });
+      
+    
+   } catch (err){
+     console.log(err)
+     res.status(500).send()
+   }
+ })
+
+ 
+/**
+ * Route to Authenticate User
+ * @name / Login evaluation and redirection
+ * @function
+ * @memberof module:routers/resource~resourceRouter
+ * @inner
+ * @param {string} userid - UserName
+ * @param {string} password - Password
+ */
+ router.post('/authenticate', (req, res) => {
+  try { 
+     const query = `SELECT * FROM Users where User_Email = '${req.body.email}'`
+     req.db.query(query, async (err, result) => {
+        if (!result || !result.length) {
+           return res.status(400).send('Cannot find user')
+         }
+         if(req.body.password == result[0].User_Password) {
+           res.status(200).json({ message: 'Success', data: result[0]})
+         } else {
+          res.status(400).json({ message: 'Invalid Credentials!'})
+         }
+     });
+
+  } catch {
+    res.status(500).send()
+  }
+})
+
+
+  
+// router.get('/:id', (req, res) => {
+//    try{
+//       const { id } = req.params;
+//       const query = id ? `SELECT * FROM Users WHERE User_Id = ${id}`: 'SELECT * FROM Users';
+//       req.db.query(query, function (err, result) {
+//          if (err) throw err;
+//          res.status(200).json({users: result})
+//        });
+//    }
+//    catch(err){
+//       console.log(err);
+//       res.status(500).send()
+//    }
+//  });
+
+//  router.post('/register', async (req, res) => {
+//    try {
+//     const { email} = req.body;
+//     req.db.query(`Select * from Users WHERE User_Email = ${email}`, function (err, result) {
+//       if (err) throw err;
+//       if(result.length){
+//         res.status(201).json({ message: "Already exists!" });
+//       }
+//     });
+//      const hashedPassword = await bcrypt.hash(req.body.password1, 10);
+//      const user = { ...req.body, password: hashedPassword };
+//      delete user['password1'];
+//      delete user['password2'];
+//      const query = "INSERT INTO Users (User_First, User_Last, User_Phone, User_Address, User_Email, User_Password ) VALUES ?"
+//      const values = [Object.values(user)];
+//      req.db.query(query, [values], function (err, result) {
+//       if (err) throw err;
+//       res.status(201).json({message: 'Success'})
+//       console.log("Number of records inserted: " + result.affectedRows);
+//     });
+     
+//    } catch (err){
+//      console.log(err)
+//      res.status(500).send()
+//    }
+//  })
+
+//  router.post('/authenticate', (req, res) => {
+//    try { 
+//       const query = `SELECT * FROM Users where User_Email = '${req.body.email}'`
+//       req.db.query(query, async (err, result) => {
+//          if (!result || !result.length) {
+//             return res.status(400).send('Cannot find user')
+//           }
+//           if(await bcrypt.compare(req.body.password, result[0].User_Password)) {
+//             res.status(200).json({ message: 'Success', data: result[0]})
+//           } else {
+//            res.status(400).json({ message: 'Invalid Credentials!'})
+//           }
+//       });
+
+//    } catch {
+//      res.status(500).send()
+//    }
+//  })
+
+ module.exports = router;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-routers_main.html">routers/main</a></li><li><a href="module-routers_project.html">routers/project</a></li><li><a href="module-routers_resource.html">routers/resource</a></li><li><a href="module-routers_staff.html">routers/staff</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-routers_main-mainRouter.html">mainRouter</a></li><li><a href="module-routers_project-projectRouter.html">projectRouter</a></li><li><a href="module-routers_resource-resourceRouter.html">resourceRouter</a></li><li><a href="module-routers_staff-staffRouter.html">staffRouter</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Fri Aug 05 2022 19:23:17 GMT-0500 (Central Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

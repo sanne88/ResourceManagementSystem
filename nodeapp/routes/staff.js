@@ -1,7 +1,29 @@
+/** Express router providing user related routes
+ * @module routers/staff
+ * @requires express
+ */
+/**
+ * express module
+ * @const
+ */
 const express = require("express");
+/**
+ * Express router to mount user related functions on.
+ * @type {object}
+ * @const
+ * @namespace staffRouter
+ */
 const router = express.Router();
 
 
+/**
+ * Route to Get All Dashboar Data
+ * @name /Get Skills data
+ * @function
+ * @memberof module:routers/staff~staffRouter
+ * @inner
+ * @param {string} UserId- User Details
+ */
 
 router.get('/GetDashboard', async (req, res) => {
   try {
@@ -19,6 +41,18 @@ router.get('/GetDashboard', async (req, res) => {
     res.status(500).send()
   }
 });
+
+
+/**
+ * Route to Get Resources based on Skills 
+ * @name /Get Resource Details Skill set , Avilable Date based on the filter criteria
+ * @function
+ * @memberof module:routers/staff~staffRouter
+ * @inner
+ * @param {string} UserId- User Details
+ * @param {string} SkillSet - Skills Selected
+ * @param {String} AvailableDate - Available Date Selected
+ */
 router.post('/findResources', async (req, res) => {
     try {
      const { Skills,AvailableDate} = req.body;
@@ -54,6 +88,18 @@ router.post('/findResources', async (req, res) => {
       res.status(500).send()
     }
   });
+
+  
+/**
+ * Route to Update Resource Status
+ * @name /POST Update Resource Sattus and Map project
+ * @function
+ * @memberof module:routers/staff~staffRouter
+ * @inner
+ * @param {string} UserId- User Details
+ * @param {string} Project Id - Project Id to Map
+ * @param {string} IsHired - Status of Resource Hired/Not Hired
+ */
   
 router.post('/updateStatus', async (req, res) => {
     try {

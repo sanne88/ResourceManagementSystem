@@ -1,0 +1,72 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0", 
+      "title": "RMS",
+      "description": "RMS",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "Projects",
+        "description": "API for projects in the system"
+      }
+    ],
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+        "/GetProjects": {
+          "get": {
+            "tags": ["projects"],
+            "summary": "Get all projects in system",
+            "responses": {
+              "200": {
+                "description": "OK",
+                "schema": {
+                    "$ref": "#/definitions/ArrayOfString"
+                  }
+              }
+            }
+          }
+        }
+      },
+      "definitions": {
+        "projects":{
+            "type": "array"
+        },
+        "Project": {
+          "properties": {
+            "ProjectName": {
+              "type": "string"
+            },
+            "ProjectId": {
+              "type": "string"
+            },
+            "SkillSet": {
+              "type": "string"
+            },
+            "Status": {
+                "type": "string"
+              }, 
+            "NoOfResources": {
+                "type": "string"
+              }
+          }
+        },
+        "Projects": {
+          "type": "array",
+          "$ref": "#/definitions/Project"
+        },
+        "ArrayOfString": {
+            "type": "array",
+            "$ref": "#/definitions/projects"
+           
+            }
+      }
+  }

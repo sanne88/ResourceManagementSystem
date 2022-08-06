@@ -1,7 +1,28 @@
+/** Express router providing user related routes
+ * @module routers/project
+ * @requires express
+ */
+/**
+ * express module
+ * @const
+ */
 const express = require("express");
+/**
+ * Express router to mount user related functions on.
+ * @type {object}
+ * @const
+ * @namespace projectRouter
+ */
 const router = express.Router();
 
-
+/**
+ * Route to Get All Projects
+ * @name /
+ * @function
+ * @memberof module:routers/project~projectRouter
+ * @inner
+ * @param {string} projects/GetProjects - Get all the available projects
+ */
 router.get("/GetProjects", (req, res) => {
     try{
       let sql = ` select  p.Name as ProjectName,p.Project_Id as ProjectId ,group_concat(s.Name) as SkillSet,p.IsActive as Status,p.TeamSize as NoOfResources  from  Project p   inner join projectskillmap ps on ps.projectid=p.Project_id  inner join Skill s on ps.Skillid = s.skillid and s.IsActive=1  group by p.Project_id;`;

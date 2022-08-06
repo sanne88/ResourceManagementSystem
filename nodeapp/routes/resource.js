@@ -1,7 +1,29 @@
+/** Express router providing user related routes
+ * @module routers/resource
+ * @requires express
+ */
+/**
+ * express module
+ * @const
+ */
 const express = require('express');
 //const bcrypt = require('bcrypt');
+/**
+ * Express router to mount user related functions on.
+ * @type {object}
+ * @const
+ * @namespace resourceRouter
+ */
 const router = express.Router();
 
+/**
+ * Route to Get All Projects
+ * @name /Get Resource Details Skill set , Avilable Date, Projects mapped
+ * @function
+ * @memberof module:routers/resource~resourceRouter
+ * @inner
+ * @param {string} UserId- User Details
+ */
 router.get("/GetResourceData", (req, res) => {
   try{
     let sql = `SELECT Skillid as value ,Name as label from Skill where IsActive=1;SELECT e.userid , s.Skillid ,s.Name from employeeskillmap e join Skill s on e.skillid=s.Skillid and s.IsActive=1 and e.userid=3;
@@ -31,6 +53,17 @@ router.get("/GetResourceData", (req, res) => {
   });
 
   
+
+/**
+ * Route to Get All Projects
+ * @name /POST Resource Details Skill set , Avilable Date
+ * @function
+ * @memberof module:routers/resource~resourceRouter
+ * @inner
+ * @param {string} skillset - Multiple skills selected 
+ * @param {string} AvailableDate - Date Selected
+ * @param {string} userid - User Id to update data
+ */
  router.post('/updateData', async (req, res) => {
    try {
     const { AvailableDate, Skills,userId} = req.body;
@@ -61,6 +94,16 @@ router.get("/GetResourceData", (req, res) => {
    }
  })
 
+ 
+/**
+ * Route to Authenticate User
+ * @name / Login evaluation and redirection
+ * @function
+ * @memberof module:routers/resource~resourceRouter
+ * @inner
+ * @param {string} userid - UserName
+ * @param {string} password - Password
+ */
  router.post('/authenticate', (req, res) => {
   try { 
      const query = `SELECT * FROM Users where User_Email = '${req.body.email}'`
